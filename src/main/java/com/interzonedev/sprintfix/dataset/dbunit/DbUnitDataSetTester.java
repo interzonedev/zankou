@@ -2,7 +2,10 @@ package com.interzonedev.sprintfix.dataset.dbunit;
 
 import java.io.File;
 import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -58,4 +61,34 @@ public class DbUnitDataSetTester {
 			}
 		}
 	}
+
+	/**
+	 * Uses the {@code java.util.Date#compareTo(java.util.Date)} method to compare the specified dates after setting the
+	 * milliseconds to zero on both.
+	 * 
+	 * @param first
+	 *            - The first {@code java.util.Date} to compare.
+	 * @param second
+	 *            - The first {@code java.util.Date} to compare.
+	 * 
+	 * @return Returns 0 if the first and seconds dates are equal down to the second. Returns less than 0 if the first
+	 *         date is before the seconds date down to the second. Returns greater than 0 if the first date is after the
+	 *         second date down to the second.
+	 */
+	public int compareDatesToTheSecond(Date first, Date second) {
+		Calendar firstCalendar = new GregorianCalendar();
+		firstCalendar.setTime(first);
+		firstCalendar.set(Calendar.MILLISECOND, 0);
+		Date firstNoMillis = firstCalendar.getTime();
+
+		Calendar secondCalendar = new GregorianCalendar();
+		secondCalendar.setTime(second);
+		secondCalendar.set(Calendar.MILLISECOND, 0);
+		Date secondNoMillis = secondCalendar.getTime();
+
+		int compare = firstNoMillis.compareTo(secondNoMillis);
+
+		return compare;
+	}
+
 }
