@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="dataSetHelper" class="com.interzonedev.sprintfix.dataset.helper.DataSetHelperImpl" />
+	<bean id="dataSetHelper" class="com.interzonedev.sprintfix.dataset.helper.DataSetHelperSpring" />
 
 	<bean id="dbUnitDataSetHandler" class="com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetHandler" />
 

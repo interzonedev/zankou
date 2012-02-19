@@ -19,6 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.interzonedev.sprintfix.dataset.helper.DataSetHelper;
 
+/**
+ * Stateless but Spring bean friendly class for testing DbUnit data sets and individual properties against a live
+ * database. When instantiated as a bean in a Spring container a {@link DataSetHelper} instance is autowired. If created
+ * outside a Spring container a {@link DataSetHelper} instance must be passed into the constructor.
+ * 
+ * @author mark@interzonedev.com
+ */
 public class DbUnitDataSetTester {
 
 	private Log log = LogFactory.getLog(getClass());
@@ -26,6 +33,25 @@ public class DbUnitDataSetTester {
 	@Autowired
 	private DataSetHelper dataSetHelper;
 
+	public DbUnitDataSetTester() {
+	}
+
+	public DbUnitDataSetTester(DataSetHelper dataSetHelper) {
+		this.dataSetHelper = dataSetHelper;
+	}
+
+	/**
+	 * Compares the specified expected data set with the actual data in the database. Ignores the specified columns.
+	 * 
+	 * @param dataSource
+	 *            - The JDBC {@code DataSource} that represents the database to from which to get the actual data.
+	 * @param expectedDataSetFilename
+	 *            - The file name of the DbUnit XML data set to compare against the actual data.
+	 * @param tableName
+	 *            - The name of the table in the database and data set to compare.
+	 * @param ignoreColumnNames
+	 *            - A {@code List} of column names to be ignored in the comparison.
+	 */
 	public void compareDataSetsIgnoreColumns(DataSource dataSource, String expectedDataSetFilename, String tableName,
 			List<String> ignoreColumnNames) {
 		IDatabaseConnection databaseConnection = null;

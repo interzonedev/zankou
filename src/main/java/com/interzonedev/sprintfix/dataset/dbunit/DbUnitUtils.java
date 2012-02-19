@@ -27,37 +27,32 @@ import org.dbunit.ext.mssql.MsSqlDataTypeFactory;
 import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.ext.oracle.OracleDataTypeFactory;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
-import org.dbunit.operation.DatabaseOperation;
 
+/**
+ * Static utilities helper class for getting database connection and data sets for DbUnit based tests.
+ * 
+ * @author mark@interzonedev.com
+ */
 public class DbUnitUtils {
 	private static Log log = LogFactory.getLog(DbUnitUtils.class);
 
-	public static void doDatabaseOperation(DatabaseOperation databaseOperation, DataSource dataSource, File dataSetFile) {
-		IDatabaseConnection databaseConnection = null;
-
-		try {
-			databaseConnection = getDatabaseConnection(dataSource);
-			IDataSet dataSet = getDataSet(dataSetFile);
-			databaseOperation.execute(databaseConnection, dataSet);
-		} catch (Throwable t) {
-			String errorMessage = "doDatabaseOperation: Error performing database operation: " + databaseOperation;
-			log.error(errorMessage, t);
-			throw new RuntimeException(errorMessage, t);
-		} finally {
-			if (null != databaseConnection) {
-				try {
-					databaseConnection.close();
-				} catch (SQLException e) {
-					String errorMessage = "doDatabaseOperation: Error closing database connection";
-					log.error(errorMessage, e);
-					throw new RuntimeException(errorMessage, e);
-				}
-			}
-		}
-	}
-
-	public static IDatabaseConnection getDatabaseConnection(DataSource dataSource) throws SQLException,
+	/**
+	 * Gets an {@code IDatabaseConnection} wrapped connection to the database represented by the specified
+	 * {@code DataSource}.
+	 * 
+	 * @param dataSource
+	 *            - The JDBC {@code DataSource} that represents the database to which to open the connection.
+	 * 
+	 * @return Returns an {@code IDatabaseConnection} wrapped connection to the database represented by the specified
+	 *         {@code DataSource}.
+	 * 
+	 * @throws SQLException
+	 * @throws DatabaseUnitException
+	 */
+	protected static IDatabaseConnection getDatabaseConnection(DataSource dataSource) throws SQLException,
 			DatabaseUnitException {
+		log.debug("getDatabaseConnection: Get connection from " + dataSource);
+
 		Connection connection = dataSource.getConnection();
 
 		IDatabaseConnection databaseConnection = new DatabaseConnection(connection);
@@ -72,12 +67,36 @@ public class DbUnitUtils {
 		return databaseConnection;
 	}
 
-	public static IDataSet getDataSet(File dataSetFile) throws MalformedURLException, DataSetException {
+	/**
+	 * Get an {@code IDataSet} representation of the specified DbUnit XML dataset file.
+	 * 
+	 * @param dataSetFile
+	 *            - The DbUnit XML dataset file to turn into an {@code IDataSet} instance.
+	 * 
+	 * @return Returns an {@code IDataSet} representation of the specified DbUnit XML dataset file.
+	 * 
+	 * @throws MalformedURLException
+	 * @throws DataSetException
+	 */
+	protected static IDataSet getDataSet(File dataSetFile) throws MalformedURLException, DataSetException {
 		FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
 		FlatXmlDataSet flatXmlDataSet = builder.build(dataSetFile);
 		return flatXmlDataSet;
 	}
 
+	/**
+	 * Gets a specific {@code IDataTypeFactory} instance for the underlying database to which the specified
+	 * {@code Connection} instance is connected. The {@code IDataTypeFactory} is chosen according to the specific
+	 * database vendor to which the {@code Connection} is connected.
+	 * 
+	 * @param connection
+	 *            - The {@code Connection} instance from which to determine the specific database vendor.
+	 * 
+	 * @return Returns a specific {@code IDataTypeFactory} instance for the underlying database to which the specified
+	 *         {@code Connection} instance is connected. Returns null if the database vendor is not recognized.
+	 * 
+	 * @throws SQLException
+	 */
 	private static IDataTypeFactory getDataTypeFactoryForConnection(Connection connection) throws SQLException {
 		DatabaseMetaData metaData = connection.getMetaData();
 		String databaseProductName = metaData.getDatabaseProductName().toLowerCase();
@@ -101,6 +120,8 @@ public class DbUnitUtils {
 			dataTypeFactory = new H2DataTypeFactory();
 		} else if ("db2".toLowerCase().equals(databaseProductName)) {
 			dataTypeFactory = new Db2DataTypeFactory();
+		} else {
+			log.warn("getDataTypeFactoryForConnection: Unrecognized database vendor");
 		}
 
 		return dataTypeFactory;

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 
-public class DataSetHelperImpl implements DataSetHelper {
+public class DataSetHelperSpring implements DataSetHelper {
 	private Log log = LogFactory.getLog(getClass());
 
 	@Autowired
