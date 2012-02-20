@@ -27,7 +27,7 @@ import com.interzonedev.sprintfix.dataset.helper.DataSetHelper;
  * 
  * @author mark@interzonedev.com
  */
-public abstract class AbstractDbUnitDataSetTester {
+public abstract class AbstractDbUnitDataSetTester implements DbUnitDataSetTester {
 
 	protected Log log = LogFactory.getLog(getClass());
 
@@ -43,6 +43,7 @@ public abstract class AbstractDbUnitDataSetTester {
 	 * @param ignoreColumnNames
 	 *            - A {@code List} of column names to be ignored in the comparison.
 	 */
+	@Override
 	public void compareDataSetsIgnoreColumns(DataSource dataSource, String expectedDataSetFilename, String tableName,
 			List<String> ignoreColumnNames) {
 		IDatabaseConnection databaseConnection = null;
@@ -92,6 +93,7 @@ public abstract class AbstractDbUnitDataSetTester {
 	 *         date is before the seconds date down to the second. Returns greater than 0 if the first date is after the
 	 *         second date down to the second.
 	 */
+	@Override
 	public int compareDatesToTheSecond(Date first, Date second) {
 		Calendar firstCalendar = new GregorianCalendar();
 		firstCalendar.setTime(first);
