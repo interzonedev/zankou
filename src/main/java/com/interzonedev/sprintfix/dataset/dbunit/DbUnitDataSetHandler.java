@@ -18,9 +18,9 @@ public class DbUnitDataSetHandler implements DataSetHandler {
 	private Log log = LogFactory.getLog(getClass());
 
 	@Override
-	public void cleanAndInsertData(File dataSetFile, Object dataSourceBean) {
+	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance) {
 		try {
-			DataSource dataSource = (DataSource) dataSourceBean;
+			DataSource dataSource = (DataSource) dataSourceInstance;
 			doDatabaseOperation(DatabaseOperation.CLEAN_INSERT, dataSource, dataSetFile);
 		} catch (Throwable t) {
 			String errorMessage = "cleanAndInsertData: Error setting up database";
@@ -30,9 +30,9 @@ public class DbUnitDataSetHandler implements DataSetHandler {
 	}
 
 	@Override
-	public void cleanData(File dataSetFile, Object dataSourceBean) {
+	public void cleanData(File dataSetFile, Object dataSourceInstance) {
 		try {
-			DataSource dataSource = (DataSource) dataSourceBean;
+			DataSource dataSource = (DataSource) dataSourceInstance;
 			doDatabaseOperation(DatabaseOperation.DELETE_ALL, dataSource, dataSetFile);
 		} catch (Throwable t) {
 			String errorMessage = "cleanData: Error tearing down database";

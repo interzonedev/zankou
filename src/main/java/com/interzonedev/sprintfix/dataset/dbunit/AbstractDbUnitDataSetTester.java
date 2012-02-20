@@ -15,30 +15,21 @@ import org.apache.commons.logging.LogFactory;
 import org.dbunit.Assertion;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.interzonedev.sprintfix.dataset.helper.DataSetHelper;
 
 /**
+ * Abstract superclass for testing DbUnit data sets and individual properties against a live database.
+ * 
  * Stateless but Spring bean friendly class for testing DbUnit data sets and individual properties against a live
  * database. When instantiated as a bean in a Spring container a {@link DataSetHelper} instance is autowired. If created
  * outside a Spring container a {@link DataSetHelper} instance must be passed into the constructor.
  * 
  * @author mark@interzonedev.com
  */
-public class DbUnitDataSetTester {
+public abstract class AbstractDbUnitDataSetTester {
 
-	private Log log = LogFactory.getLog(getClass());
-
-	@Autowired
-	private DataSetHelper dataSetHelper;
-
-	public DbUnitDataSetTester() {
-	}
-
-	public DbUnitDataSetTester(DataSetHelper dataSetHelper) {
-		this.dataSetHelper = dataSetHelper;
-	}
+	protected Log log = LogFactory.getLog(getClass());
 
 	/**
 	 * Compares the specified expected data set with the actual data in the database. Ignores the specified columns.
@@ -65,7 +56,7 @@ public class DbUnitDataSetTester {
 
 			IDataSet actualDataSet = databaseConnection.createDataSet();
 
-			File expectedDataSetFile = dataSetHelper.getDataSetFile(expectedDataSetFilename);
+			File expectedDataSetFile = getDataSetHelper().getDataSetFile(expectedDataSetFilename);
 
 			IDataSet expectedDataSet = DbUnitUtils.getDataSet(expectedDataSetFile);
 
@@ -117,4 +108,5 @@ public class DbUnitDataSetTester {
 		return compare;
 	}
 
+	protected abstract DataSetHelper getDataSetHelper();
 }

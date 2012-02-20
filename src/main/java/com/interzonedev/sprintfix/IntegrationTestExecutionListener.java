@@ -4,6 +4,8 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -130,14 +132,14 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 
 			String dataSourceBeanId = dataSet.dataSourceBeanId();
 
-			Object dataSourceBean = applicationContext.getBean(dataSourceBeanId);
+			DataSource dataSource = (DataSource) applicationContext.getBean(dataSourceBeanId);
 
 			switch (operation) {
 				case SETUP:
-					dataSetHandler.cleanAndInsertData(dataSetFile, dataSourceBean);
+					dataSetHandler.cleanAndInsertData(dataSetFile, dataSource);
 					break;
 				case TEARDOWN:
-					dataSetHandler.cleanData(dataSetFile, dataSourceBean);
+					dataSetHandler.cleanData(dataSetFile, dataSource);
 					break;
 			}
 		}
