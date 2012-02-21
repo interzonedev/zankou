@@ -1,6 +1,9 @@
 package com.interzonedev.sprintfix.dataset;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
 
@@ -30,6 +33,34 @@ public class DataSetHelper {
 			String errorMessage = "getDataSetFile: Error getting dataset file";
 			log.error(errorMessage, t2);
 			throw new RuntimeException(errorMessage, t2);
+		}
+	}
+
+	public static String getFileContents(File file) {
+		try {
+			long fileSize = file.length();
+
+			byte[] bytes = new byte[(int) fileSize];
+
+			InputStream is = new FileInputStream(file);
+
+			int offset = 0;
+			int numRead = 0;
+			while (offset < bytes.length && (numRead = is.read(bytes, offset, bytes.length - offset)) >= 0) {
+				offset += numRead;
+			}
+
+			if (offset < bytes.length) {
+				throw new IOException("Could not completely read file " + file.getPath());
+			}
+
+			String contents = new String(bytes);
+
+			return contents;
+		} catch (Throwable t) {
+			String errorMessage = "getFileContents: Error getting file contents from " + file.getPath();
+			log.error(errorMessage, t);
+			throw new RuntimeException(errorMessage, t);
 		}
 	}
 }
