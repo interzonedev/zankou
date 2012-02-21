@@ -12,10 +12,10 @@ import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 
 import com.interzonedev.sprintfix.dataset.DataSet;
+import com.interzonedev.sprintfix.dataset.DataSetHelper;
 import com.interzonedev.sprintfix.dataset.DataSets;
 import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
 import com.interzonedev.sprintfix.dataset.handler.Handler;
-import com.interzonedev.sprintfix.dataset.helper.DataSetHelper;
 
 public class IntegrationTestExecutionListener extends AbstractTestExecutionListener {
 	private Log log = LogFactory.getLog(getClass());
@@ -23,8 +23,6 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 	private final ThreadLocal<IntegrationTestContext> integrationTestContext = new ThreadLocal<IntegrationTestContext>();
 
 	private ApplicationContext applicationContext;
-
-	private DataSetHelper dataSetHelper;
 
 	private enum Operation {
 		SETUP, TEARDOWN;
@@ -49,8 +47,6 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 		}
 
 		applicationContext = testContext.getApplicationContext();
-
-		dataSetHelper = (DataSetHelper) applicationContext.getBean("dataSetHelper");
 	}
 
 	@Override
@@ -126,7 +122,7 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 
 			String dataSetFilename = dataSet.filename();
 
-			File dataSetFile = dataSetHelper.getDataSetFile(dataSetFilename);
+			File dataSetFile = DataSetHelper.getDataSetFile(dataSetFilename);
 
 			String dataSourceBeanId = dataSet.dataSourceBeanId();
 
