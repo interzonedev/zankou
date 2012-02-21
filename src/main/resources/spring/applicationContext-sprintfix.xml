@@ -13,4 +13,10 @@
 
 	<bean id="dbUnitDataSetTester"
 		class="com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetTesterSpring" />
+
+	<bean id="mongoDataSetHandler"
+		class="com.interzonedev.sprintfix.dataset.mongo.MongoDataSetHandler" />
+
+	<bean id="mongoDataSetTester"
+		class="com.interzonedev.sprintfix.dataset.mongo.MongoDataSetTester" />
 </beans>
