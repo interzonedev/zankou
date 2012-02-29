@@ -1,13 +1,14 @@
 package com.interzonedev.sprintfix.dataset.mongo;
 
 import java.io.File;
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.junit.Assert;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.interzonedev.sprintfix.dataset.DataSetHelper;
@@ -16,6 +17,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
+import com.mongodb.util.JSON;
 
 public class MongoDataSetTester {
 
@@ -27,33 +29,49 @@ public class MongoDataSetTester {
 		log.debug("compareDataSetsIgnoreProperties");
 
 		try {
-			File expectedDataSetFile = DataSetHelper.getDataSetFile(expectedDataSetFilename);
-			String expectedDataSetFileContents = DataSetHelper.getFileContents(expectedDataSetFile);
+			DBObject expectedDbObject = getExpectedDbObjectForCollectionFromDataSet(expectedDataSetFilename,
+					ignorePropertyNames);
 
-			@SuppressWarnings("unchecked")
-			Map<String, Object> expectedObjectMap = (new ObjectMapper()).readValue(expectedDataSetFileContents,
-					HashMap.class);
+			DBObject actualDbObject = getActualDbObjectForCollection(mongoTemplate, collectionName, ignorePropertyNames);
 
-			DBObject expectedDbObject = new BasicDBObject(expectedObjectMap);
-			removeIgnorePropertyNames(expectedDbObject, ignorePropertyNames);
+			log.debug("compareDataSetsIgnoreProperties: expectedDbObject = " + expectedDbObject);
+			log.debug("compareDataSetsIgnoreProperties: actualDbObject = " + actualDbObject);
 
-			DBObject actualDbObject = new BasicDBObject();
-			BasicDBList collectionMembers = new BasicDBList();
-			DBCollection locationsCollection = mongoTemplate.getCollection("locations");
-			DBCursor cursor = locationsCollection.find();
-			for (DBObject obj : cursor) {
-				removeIgnorePropertyNames(obj, ignorePropertyNames);
-				collectionMembers.add(obj);
-			}
-			actualDbObject.put(collectionName, collectionMembers);
-
-			log.debug("compareDataSetsIgnoreProperties: " + expectedDbObject);
-
+			Assert.assertEquals(expectedDbObject, actualDbObject);
 		} catch (Throwable t) {
 			String errorMessage = "";
 			log.error(errorMessage, t);
 			throw new RuntimeException(errorMessage, t);
 		}
+	}
+
+	private DBObject getExpectedDbObjectForCollectionFromDataSet(String expectedDataSetFilename,
+			List<String> ignorePropertyNames) throws JsonParseException, JsonMappingException, IOException {
+		File expectedDataSetFile = DataSetHelper.getDataSetFile(expectedDataSetFilename);
+		String expectedDataSetFileContents = DataSetHelper.getFileContents(expectedDataSetFile);
+
+		DBObject expectedDbObject = (DBObject) JSON.parse(expectedDataSetFileContents);
+
+		removeIgnorePropertyNames(expectedDbObject, ignorePropertyNames);
+
+		return expectedDbObject;
+	}
+
+	private DBObject getActualDbObjectForCollection(MongoTemplate mongoTemplate, String collectionName,
+			List<String> ignorePropertyNames) {
+		DBObject actualDbObject = new BasicDBObject();
+
+		BasicDBList actualCollectionMembers = new BasicDBList();
+		DBCollection actualCollection = mongoTemplate.getCollection(collectionName);
+		DBCursor actualCollectionCursor = actualCollection.find();
+		for (DBObject obj : actualCollectionCursor) {
+			actualCollectionMembers.add(obj);
+		}
+		actualDbObject.put(collectionName, actualCollectionMembers);
+
+		removeIgnorePropertyNames(actualDbObject, ignorePropertyNames);
+
+		return actualDbObject;
 	}
 
 	private void removeIgnorePropertyNames(DBObject dbObj, List<String> ignorePropertyNames) {
