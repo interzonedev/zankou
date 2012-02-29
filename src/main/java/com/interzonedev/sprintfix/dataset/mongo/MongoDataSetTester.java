@@ -13,7 +13,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.interzonedev.sprintfix.dataset.DataSetHelper;
 import com.mongodb.BasicDBList;
-import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
@@ -29,15 +28,16 @@ public class MongoDataSetTester {
 		log.debug("compareDataSetsIgnoreProperties");
 
 		try {
-			DBObject expectedDbObject = getExpectedDbObjectForCollectionFromDataSet(expectedDataSetFilename,
+			DBObject expectedCollection = getExpectedDbObjectForCollectionFromDataSet(expectedDataSetFilename,
+					collectionName, ignorePropertyNames);
+
+			DBObject actualCollection = getActualDbObjectForCollection(mongoTemplate, collectionName,
 					ignorePropertyNames);
 
-			DBObject actualDbObject = getActualDbObjectForCollection(mongoTemplate, collectionName, ignorePropertyNames);
+			log.debug("compareDataSetsIgnoreProperties: expectedCollection = " + expectedCollection);
+			log.debug("compareDataSetsIgnoreProperties: actualCollection = " + actualCollection);
 
-			log.debug("compareDataSetsIgnoreProperties: expectedDbObject = " + expectedDbObject);
-			log.debug("compareDataSetsIgnoreProperties: actualDbObject = " + actualDbObject);
-
-			Assert.assertEquals(expectedDbObject, actualDbObject);
+			Assert.assertEquals(expectedCollection, actualCollection);
 		} catch (Throwable t) {
 			String errorMessage = "";
 			log.error(errorMessage, t);
@@ -45,33 +45,33 @@ public class MongoDataSetTester {
 		}
 	}
 
-	private DBObject getExpectedDbObjectForCollectionFromDataSet(String expectedDataSetFilename,
+	private DBObject getExpectedDbObjectForCollectionFromDataSet(String expectedDataSetFilename, String collectionName,
 			List<String> ignorePropertyNames) throws JsonParseException, JsonMappingException, IOException {
 		File expectedDataSetFile = DataSetHelper.getDataSetFile(expectedDataSetFilename);
 		String expectedDataSetFileContents = DataSetHelper.getFileContents(expectedDataSetFile);
 
 		DBObject expectedDbObject = (DBObject) JSON.parse(expectedDataSetFileContents);
 
-		removeIgnorePropertyNames(expectedDbObject, ignorePropertyNames);
+		DBObject expectedCollection = (DBObject) expectedDbObject.get(collectionName);
 
-		return expectedDbObject;
+		removeIgnorePropertyNames(expectedCollection, ignorePropertyNames);
+
+		return expectedCollection;
 	}
 
 	private DBObject getActualDbObjectForCollection(MongoTemplate mongoTemplate, String collectionName,
 			List<String> ignorePropertyNames) {
-		DBObject actualDbObject = new BasicDBObject();
-
 		BasicDBList actualCollectionMembers = new BasicDBList();
+
 		DBCollection actualCollection = mongoTemplate.getCollection(collectionName);
 		DBCursor actualCollectionCursor = actualCollection.find();
 		for (DBObject obj : actualCollectionCursor) {
 			actualCollectionMembers.add(obj);
 		}
-		actualDbObject.put(collectionName, actualCollectionMembers);
 
-		removeIgnorePropertyNames(actualDbObject, ignorePropertyNames);
+		removeIgnorePropertyNames(actualCollectionMembers, ignorePropertyNames);
 
-		return actualDbObject;
+		return actualCollectionMembers;
 	}
 
 	private void removeIgnorePropertyNames(DBObject dbObj, List<String> ignorePropertyNames) {
