@@ -1,53 +1,145 @@
 package com.interzonedev.sprintfix;
 
+import java.io.File;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.TestContext;
+
 import com.interzonedev.sprintfix.dataset.DataSet;
+import com.interzonedev.sprintfix.dataset.DataSetHelper;
+import com.interzonedev.sprintfix.dataset.DataSetValues;
 import com.interzonedev.sprintfix.dataset.DataSets;
+import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
+import com.interzonedev.sprintfix.dataset.handler.Handler;
 
 public class IntegrationTestContext {
-	private List<DataSet> classDataSets = new ArrayList<DataSet>();
+	private List<DataSetValues> classDataSets = new ArrayList<DataSetValues>();
 
-	private Map<Method, List<DataSet>> methodsDataSets = new HashMap<Method, List<DataSet>>();
+	private Map<Method, List<DataSetValues>> methodsDataSets = new HashMap<Method, List<DataSetValues>>();
 
-	public List<DataSet> getClassDataSets() {
+	public void setup(TestContext testContext) {
+		Class<?> testClass = testContext.getTestClass();
+
+		if (testClass.isAnnotationPresent(DataSets.class)) {
+			DataSets classDataSets = (DataSets) testClass.getAnnotation(DataSets.class);
+			addClassDataSets(classDataSets, testContext);
+		} else if (testClass.isAnnotationPresent(DataSet.class)) {
+			DataSet classDataSet = (DataSet) testClass.getAnnotation(DataSet.class);
+			addClassDataSet(classDataSet, testContext);
+		}
+	}
+
+	public List<DataSetValues> getTestDataSetValues(TestContext testContext) {
+		Method method = testContext.getTestMethod();
+
+		List<DataSetValues> testDataSetValues = getMethodDataSetValues(method);
+
+		// Attempt to get data set values from the method annotation.
+		if (testDataSetValues.isEmpty()) {
+			if (method.isAnnotationPresent(DataSets.class)) {
+				DataSets methodDataSets = (DataSets) method.getAnnotation(DataSets.class);
+				addMethodDataSets(method, methodDataSets, testContext);
+			} else if (method.isAnnotationPresent(DataSet.class)) {
+				DataSet methodDataSet = (DataSet) method.getAnnotation(DataSet.class);
+				addMethodDataSet(method, methodDataSet, testContext);
+			}
+		}
+
+		// Attempt to get data set values from the class annotation.
+		if (testDataSetValues.isEmpty()) {
+			testDataSetValues = getClassDataSetValues();
+		}
+
+		return testDataSetValues;
+	}
+
+	private List<DataSetValues> getClassDataSetValues() {
 		return classDataSets;
 	}
 
-	public void addClassDataSets(DataSets dataSets) {
-		classDataSets.addAll(Arrays.asList(dataSets.dataSets()));
-	}
-
-	public void addClassDataSet(DataSet dataSet) {
-		classDataSets.add(dataSet);
-	}
-
-	public List<DataSet> getMethodDataSets(Method method) {
-		List<DataSet> methodDataSets = getExistingOrEmptyMethodDataSets(method);
+	private List<DataSetValues> getMethodDataSetValues(Method method) {
+		List<DataSetValues> methodDataSets = getExistingOrEmptyMethodDataSets(method);
 		return methodDataSets;
 	}
 
-	public void addMethodDataSets(Method method, DataSets dataSets) {
-		List<DataSet> methodDataSets = getExistingOrEmptyMethodDataSets(method);
-		methodDataSets.addAll(Arrays.asList(dataSets.dataSets()));
+	private void addClassDataSets(DataSets dataSets, TestContext testContext) {
+		List<DataSetValues> dataSetValuesList = getDataSetValuesFromDataSets(dataSets, testContext);
+		classDataSets.addAll(dataSetValuesList);
 	}
 
-	public void addMethodDataSet(Method method, DataSet dataSet) {
-		List<DataSet> methodDataSets = getExistingOrEmptyMethodDataSets(method);
-		methodDataSets.add(dataSet);
+	private void addClassDataSet(DataSet dataSet, TestContext testContext) {
+		DataSetValues dataSetValues = getDataSetValuesFromDataSet(dataSet, testContext);
+		classDataSets.add(dataSetValues);
 	}
 
-	private List<DataSet> getExistingOrEmptyMethodDataSets(Method method) {
-		List<DataSet> methodDataSets = methodsDataSets.get(method);
+	private void addMethodDataSets(Method method, DataSets dataSets, TestContext testContext) {
+		List<DataSetValues> dataSetValuesList = getDataSetValuesFromDataSets(dataSets, testContext);
+		List<DataSetValues> methodDataSets = getExistingOrEmptyMethodDataSets(method);
+		methodDataSets.addAll(dataSetValuesList);
+	}
+
+	private void addMethodDataSet(Method method, DataSet dataSet, TestContext testContext) {
+		DataSetValues dataSetValues = getDataSetValuesFromDataSet(dataSet, testContext);
+		List<DataSetValues> methodDataSets = getExistingOrEmptyMethodDataSets(method);
+		methodDataSets.add(dataSetValues);
+	}
+
+	private List<DataSetValues> getExistingOrEmptyMethodDataSets(Method method) {
+		List<DataSetValues> methodDataSets = methodsDataSets.get(method);
 		if (null == methodDataSets) {
-			methodDataSets = new ArrayList<DataSet>();
+			methodDataSets = new ArrayList<DataSetValues>();
 			methodsDataSets.put(method, methodDataSets);
 		}
 		return methodDataSets;
+	}
+
+	private DataSetValues getDataSetValuesFromDataSet(DataSet dataSet, TestContext testContext) {
+		ApplicationContext applicationContext = testContext.getApplicationContext();
+
+		Handler handler = dataSet.handler();
+		String handlerBeanId = dataSet.handlerBeanId();
+
+		if (null != handler) {
+			handlerBeanId = handler.handlerBeanId();
+		}
+
+		if (StringUtils.isBlank(handlerBeanId)) {
+			StringBuilder errorMessage = new StringBuilder("getDataSetValuesFromDataSet: ");
+			errorMessage.append("The test method ").append(testContext.getTestMethod().getName());
+			errorMessage.append(" on the test class ").append(testContext.getTestClass().getName());
+			errorMessage.append(" does not specify a handler bean id.");
+			throw new RuntimeException(errorMessage.toString());
+		}
+
+		DataSetHandler dataSetHandler = (DataSetHandler) applicationContext.getBean(handlerBeanId);
+
+		String dataSetFilename = dataSet.filename();
+
+		File dataSetFile = DataSetHelper.getDataSetFile(dataSetFilename);
+
+		String dataSourceBeanId = dataSet.dataSourceBeanId();
+
+		Object dataSourceBean = applicationContext.getBean(dataSourceBeanId);
+
+		DataSetValues dataSetValues = new DataSetValues(dataSetHandler, dataSetFile, dataSourceBean);
+
+		return dataSetValues;
+	}
+
+	private List<DataSetValues> getDataSetValuesFromDataSets(DataSets dataSets, TestContext testContext) {
+		List<DataSetValues> dataSetValuesList = new ArrayList<DataSetValues>();
+
+		for (DataSet dataSet : dataSets.dataSets()) {
+			DataSetValues dataSetValues = getDataSetValuesFromDataSet(dataSet, testContext);
+			dataSetValuesList.add(dataSetValues);
+		}
+
+		return dataSetValuesList;
 	}
 }
