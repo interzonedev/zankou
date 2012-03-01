@@ -61,6 +61,8 @@ public class DbUnitDataSetTester {
 			if (null != databaseConnection) {
 				try {
 					databaseConnection.close();
+					log.debug("compareDataSetsIgnoreColumns: Closed connection " + databaseConnection + " from "
+							+ dataSource);
 				} catch (SQLException e) {
 					String errorMessage = "compareDataSetsIgnoreColumns: Error closing database connection";
 					log.error(errorMessage, e);

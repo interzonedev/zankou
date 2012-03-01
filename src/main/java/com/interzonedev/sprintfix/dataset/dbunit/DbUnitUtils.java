@@ -51,9 +51,8 @@ public class DbUnitUtils {
 	 */
 	protected static IDatabaseConnection getDatabaseConnection(DataSource dataSource) throws SQLException,
 			DatabaseUnitException {
-		log.debug("getDatabaseConnection: Get connection from " + dataSource);
-
 		Connection connection = dataSource.getConnection();
+		log.debug("getDatabaseConnection: Opened connection " + connection + " from " + dataSource);
 
 		IDatabaseConnection databaseConnection = new DatabaseConnection(connection);
 

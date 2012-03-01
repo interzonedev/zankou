@@ -89,15 +89,6 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 	private void doDatabaseOpertions(Operation operation, TestContext testContext) {
 		List<DataSet> testDataSets = getTestDataSets(testContext);
 
-		if (Operation.SETUP.equals(operation) && testDataSets.isEmpty()) {
-			StringBuilder errorMessage = new StringBuilder("doDatabaseOpertions: ");
-			errorMessage.append("The test method ").append(testContext.getTestMethod().getName());
-			errorMessage.append(" on the test class ").append(testContext.getTestClass().getName());
-			errorMessage.append(" does not have a DataSets or DataSet annotation");
-			errorMessage.append(" on either class or the method level.");
-			throw new RuntimeException(errorMessage.toString());
-		}
-
 		for (DataSet dataSet : testDataSets) {
 			Handler handler = dataSet.handler();
 			String handlerBeanId = dataSet.handlerBeanId();

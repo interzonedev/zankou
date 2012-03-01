@@ -56,6 +56,7 @@ public class DbUnitDataSetHandler implements DataSetHandler {
 			if (null != databaseConnection) {
 				try {
 					databaseConnection.close();
+					log.debug("doDatabaseOperation: Closed connection " + databaseConnection + " from " + dataSource);
 				} catch (SQLException e) {
 					String errorMessage = "doDatabaseOperation: Error closing database connection";
 					log.error(errorMessage, e);
