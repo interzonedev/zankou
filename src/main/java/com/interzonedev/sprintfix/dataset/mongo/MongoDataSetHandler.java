@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.interzonedev.sprintfix.Operation;
+import com.interzonedev.sprintfix.DataSetOperation;
 import com.interzonedev.sprintfix.dataset.DataSetHelper;
 import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
 import com.mongodb.DBCollection;
@@ -24,7 +24,7 @@ public class MongoDataSetHandler implements DataSetHandler {
 
 		try {
 			MongoTemplate mongoTemplate = (MongoTemplate) dataSourceInstance;
-			doDatabaseOperation(Operation.SETUP, mongoTemplate, dataSetFile);
+			doDatabaseOperation(DataSetOperation.SETUP, mongoTemplate, dataSetFile);
 			log.debug("cleanAndInsertData: Inserted collections");
 		} catch (Throwable t) {
 			String errorMessage = "cleanAndInsertData: Error setting up database";
@@ -39,7 +39,7 @@ public class MongoDataSetHandler implements DataSetHandler {
 
 		try {
 			MongoTemplate mongoTemplate = (MongoTemplate) dataSourceInstance;
-			doDatabaseOperation(Operation.TEARDOWN, mongoTemplate, dataSetFile);
+			doDatabaseOperation(DataSetOperation.TEARDOWN, mongoTemplate, dataSetFile);
 			log.debug("cleanData: Emptied collections");
 		} catch (Throwable t) {
 			String errorMessage = "cleanAndInsertData: Error tearing down database";
@@ -48,7 +48,7 @@ public class MongoDataSetHandler implements DataSetHandler {
 		}
 	}
 
-	private void doDatabaseOperation(Operation operation, MongoTemplate mongoTemplate, File dataSetFile) {
+	private void doDatabaseOperation(DataSetOperation operation, MongoTemplate mongoTemplate, File dataSetFile) {
 		String dataSetFileContents = DataSetHelper.getFileContents(dataSetFile);
 
 		DBObject dataSetDBObject = MongoUtils.getDBObjectFromFileContents(dataSetFileContents);
@@ -59,7 +59,7 @@ public class MongoDataSetHandler implements DataSetHandler {
 			mongoTemplate.remove(new Query(), collectionName);
 		}
 
-		if (Operation.SETUP.equals(operation)) {
+		if (DataSetOperation.SETUP.equals(operation)) {
 
 			for (String collectionName : collectionNames) {
 				DBCollection collection = mongoTemplate.getCollection(collectionName);

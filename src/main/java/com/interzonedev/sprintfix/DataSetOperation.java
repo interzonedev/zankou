@@ -1,5 +1,5 @@
 package com.interzonedev.sprintfix;
 
-public enum Operation {
+public enum DataSetOperation {
 	SETUP, TEARDOWN;
 }

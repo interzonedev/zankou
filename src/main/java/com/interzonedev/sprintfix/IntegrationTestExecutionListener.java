@@ -54,14 +54,14 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 	public void beforeTestMethod(TestContext testContext) throws Exception {
 		log.debug("beforeTestMethod");
 
-		doDatabaseOpertions(Operation.SETUP, testContext);
+		doDatabaseOpertions(DataSetOperation.SETUP, testContext);
 	}
 
 	@Override
 	public void afterTestMethod(TestContext testContext) throws Exception {
 		log.debug("afterTestMethod");
 
-		doDatabaseOpertions(Operation.TEARDOWN, testContext);
+		doDatabaseOpertions(DataSetOperation.TEARDOWN, testContext);
 	}
 
 	private List<DataSet> getTestDataSets(TestContext testContext) {
@@ -86,7 +86,7 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 		return testDataSets;
 	}
 
-	private void doDatabaseOpertions(Operation operation, TestContext testContext) {
+	private void doDatabaseOpertions(DataSetOperation operation, TestContext testContext) {
 		List<DataSet> testDataSets = getTestDataSets(testContext);
 
 		for (DataSet dataSet : testDataSets) {
