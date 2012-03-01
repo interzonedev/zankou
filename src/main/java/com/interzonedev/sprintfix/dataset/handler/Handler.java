@@ -1,7 +1,7 @@
 package com.interzonedev.sprintfix.dataset.handler;
 
 public enum Handler {
-	DBUNIT("dbUnitDataSetHandler"), MONGO("mongoDataSetHandler");
+	DBUNIT("sprintfixDbUnitDataSetHandler"), MONGO("sprintfixMongoDataSetHandler");
 
 	private final String handlerBeanId;
 

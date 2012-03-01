@@ -5,15 +5,15 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="dbUnitDataSetHandler"
+	<bean id="sprintfixDbUnitDataSetHandler"
 		class="com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetHandler" />
 
-	<bean id="dbUnitDataSetTester"
+	<bean id="sprintfixDbUnitDataSetTester"
 		class="com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetTester" />
 
-	<bean id="mongoDataSetHandler"
+	<bean id="sprintfixMongoDataSetHandler"
 		class="com.interzonedev.sprintfix.dataset.mongo.MongoDataSetHandler" />
 
-	<bean id="mongoDataSetTester"
+	<bean id="sprintfixMongoDataSetTester"
 		class="com.interzonedev.sprintfix.dataset.mongo.MongoDataSetTester" />
 </beans>
