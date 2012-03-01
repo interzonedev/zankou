@@ -24,10 +24,6 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 
 	private ApplicationContext applicationContext;
 
-	private enum Operation {
-		SETUP, TEARDOWN;
-	}
-
 	public IntegrationTestExecutionListener() {
 		integrationTestContext.set(new IntegrationTestContext());
 	}
