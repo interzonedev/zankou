@@ -10,6 +10,7 @@ import org.springframework.test.context.support.AbstractTestExecutionListener;
 
 import com.interzonedev.sprintfix.dataset.DataSetValues;
 import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
+import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 
 public class IntegrationTestExecutionListener extends AbstractTestExecutionListener {
 	private Log log = LogFactory.getLog(getClass());
@@ -55,10 +56,11 @@ public class IntegrationTestExecutionListener extends AbstractTestExecutionListe
 			DataSetHandler dataSetHandler = dataSet.getDataSetHandler();
 			File dataSetFile = dataSet.getDataSetFile();
 			Object dataSourceBean = dataSet.getDataSourceBean();
+			DataSetTransformer dataSetTransformer = dataSet.getDataSetTransformer();
 
 			switch (operation) {
 				case SETUP:
-					dataSetHandler.cleanAndInsertData(dataSetFile, dataSourceBean);
+					dataSetHandler.cleanAndInsertData(dataSetFile, dataSourceBean, dataSetTransformer);
 					break;
 				case TEARDOWN:
 					dataSetHandler.cleanData(dataSetFile, dataSourceBean);

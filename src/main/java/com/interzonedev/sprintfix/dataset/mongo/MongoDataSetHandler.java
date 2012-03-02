@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.interzonedev.sprintfix.DataSetOperation;
 import com.interzonedev.sprintfix.dataset.DataSetHelper;
 import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
+import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
@@ -19,12 +20,12 @@ public class MongoDataSetHandler implements DataSetHandler {
 	private Log log = LogFactory.getLog(getClass());
 
 	@Override
-	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance) {
+	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance, DataSetTransformer dataSetTransformer) {
 		log.debug("cleanAndInsertData: " + dataSetFile.getName());
 
 		try {
 			MongoTemplate mongoTemplate = (MongoTemplate) dataSourceInstance;
-			doDatabaseOperation(DataSetOperation.SETUP, mongoTemplate, dataSetFile);
+			doDatabaseOperation(DataSetOperation.SETUP, mongoTemplate, dataSetFile, dataSetTransformer);
 			log.debug("cleanAndInsertData: Inserted collections");
 		} catch (Throwable t) {
 			String errorMessage = "cleanAndInsertData: Error setting up database";
@@ -39,7 +40,7 @@ public class MongoDataSetHandler implements DataSetHandler {
 
 		try {
 			MongoTemplate mongoTemplate = (MongoTemplate) dataSourceInstance;
-			doDatabaseOperation(DataSetOperation.TEARDOWN, mongoTemplate, dataSetFile);
+			doDatabaseOperation(DataSetOperation.TEARDOWN, mongoTemplate, dataSetFile, null);
 			log.debug("cleanData: Emptied collections");
 		} catch (Throwable t) {
 			String errorMessage = "cleanAndInsertData: Error tearing down database";
@@ -48,7 +49,8 @@ public class MongoDataSetHandler implements DataSetHandler {
 		}
 	}
 
-	private void doDatabaseOperation(DataSetOperation operation, MongoTemplate mongoTemplate, File dataSetFile) {
+	private void doDatabaseOperation(DataSetOperation operation, MongoTemplate mongoTemplate, File dataSetFile,
+			DataSetTransformer dataSetTransformer) {
 		String dataSetFileContents = DataSetHelper.getFileContents(dataSetFile);
 
 		DBObject dataSetDBObject = MongoUtils.getDBObjectFromFileContents(dataSetFileContents);
@@ -67,8 +69,9 @@ public class MongoDataSetHandler implements DataSetHandler {
 				DBObject collectionData = (DBObject) dataSetDBObject.get(collectionName);
 				for (String key : collectionData.keySet()) {
 					DBObject collectionItem = (DBObject) collectionData.get(key);
-					// TODO - Pass in a transformer instance with the DataSet.
-					MongoUtils.transformCollectionItemFromDataSet(collectionItem);
+					if (null != dataSetTransformer) {
+						collectionItem = (DBObject) dataSetTransformer.transformDataSetItem(collectionItem);
+					}
 					collection.insert(collectionItem);
 				}
 			}

@@ -17,6 +17,7 @@ import com.interzonedev.sprintfix.dataset.DataSetValues;
 import com.interzonedev.sprintfix.dataset.DataSets;
 import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
 import com.interzonedev.sprintfix.dataset.handler.Handler;
+import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 
 public class IntegrationTestContext {
 	private List<DataSetValues> classDataSets = new ArrayList<DataSetValues>();
@@ -120,14 +121,18 @@ public class IntegrationTestContext {
 		DataSetHandler dataSetHandler = (DataSetHandler) applicationContext.getBean(handlerBeanId);
 
 		String dataSetFilename = dataSet.filename();
-
 		File dataSetFile = DataSetHelper.getDataSetFile(dataSetFilename);
 
 		String dataSourceBeanId = dataSet.dataSourceBeanId();
-
 		Object dataSourceBean = applicationContext.getBean(dataSourceBeanId);
 
-		DataSetValues dataSetValues = new DataSetValues(dataSetHandler, dataSetFile, dataSourceBean);
+		DataSetTransformer dataSetTransformer = null;
+		String transformerBeanId = dataSet.transformerBeanId();
+		if (StringUtils.isNotBlank(transformerBeanId)) {
+			dataSetTransformer = (DataSetTransformer) applicationContext.getBean(transformerBeanId);
+		}
+
+		DataSetValues dataSetValues = new DataSetValues(dataSetHandler, dataSetFile, dataSourceBean, dataSetTransformer);
 
 		return dataSetValues;
 	}

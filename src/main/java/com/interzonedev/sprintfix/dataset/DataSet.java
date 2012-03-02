@@ -19,4 +19,6 @@ public @interface DataSet {
 	Handler handler() default Handler.DBUNIT;
 
 	String dataSourceBeanId();
+
+	String transformerBeanId() default "";
 }

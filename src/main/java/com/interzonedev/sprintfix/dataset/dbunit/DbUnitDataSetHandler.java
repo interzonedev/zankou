@@ -12,13 +12,14 @@ import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
 import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
+import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 
 public class DbUnitDataSetHandler implements DataSetHandler {
 
 	private Log log = LogFactory.getLog(getClass());
 
 	@Override
-	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance) {
+	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance, DataSetTransformer dataSetTransformer) {
 		try {
 			DataSource dataSource = (DataSource) dataSourceInstance;
 			doDatabaseOperation(DatabaseOperation.CLEAN_INSERT, dataSource, dataSetFile);
