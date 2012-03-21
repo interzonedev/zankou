@@ -8,7 +8,10 @@
 	<packaging>jar</packaging>
 
 	<name>Spring Based Integration Test Fixture</name>
-	<url>http://maven.apache.org</url>
+	<description>
+		A Spring based framework for setting up, tearing down and testing data in a variety of databases (JDBC, MongoDB).
+	</description>
+	<url>https://github.com/interzonedev/sprintfix</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
