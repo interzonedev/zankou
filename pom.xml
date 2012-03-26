@@ -4,7 +4,7 @@
 
 	<groupId>com.interzonedev</groupId>
 	<artifactId>sprintfix</artifactId>
-	<version>0.2</version>
+	<version>0.2.1</version>
 	<packaging>jar</packaging>
 
 	<name>Spring Based Integration Test Fixture</name>
@@ -12,6 +12,19 @@
 		A Spring based framework for setting up, tearing down and testing data in a variety of databases (JDBC, MongoDB).
 	</description>
 	<url>https://github.com/interzonedev/sprintfix</url>
+	<inceptionYear>2012</inceptionYear>
+
+	<developers>
+		<developer>
+			<name>Mark Markarian</name>
+			<email>mark@interzonedev.com</email>
+			<url>http://interzonedev.com</url>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>-8</timezone>
+		</developer>
+	</developers>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -75,4 +88,25 @@
 			<version>1.0.1.RELEASE</version>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ftp</artifactId>
+				<version>2.2</version>
+			</extension>
+		</extensions>
+	</build>
+
+	<distributionManagement>
+		<downloadUrl>http://repo.interzonedev.com/maven</downloadUrl>
+		<repository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>interzonedev-maven-repo</id>
+			<name>Interzone Development Maven Repository</name>
+			<url>ftp://repo.interzonedev.com/repo.interzonedev.com/maven</url>
+			<layout>default</layout>
+		</repository>
+	</distributionManagement>
 </project>
