@@ -4,7 +4,7 @@
 
 	<groupId>com.interzonedev</groupId>
 	<artifactId>sprintfix</artifactId>
-	<version>0.2.2-SNAPSHOT</version>
+	<version>0.2.2</version>
 	<packaging>jar</packaging>
 
 	<name>Spring Based Integration Test Fixture</name>
