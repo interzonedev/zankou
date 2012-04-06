@@ -10,9 +10,5 @@
 
 	<bean id="sprintfixDbUnitDataSetHandler" class="com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetHandler" />
 
-	<bean id="sprintfixDbUnitDataSetTester" class="com.interzonedev.sprintfix.dataset.dbunit.DbUnitDataSetTester" />
-
 	<bean id="sprintfixMongoDataSetHandler" class="com.interzonedev.sprintfix.dataset.mongo.MongoDataSetHandler" />
-
-	<bean id="sprintfixMongoDataSetTester" class="com.interzonedev.sprintfix.dataset.mongo.MongoDataSetTester" />
 </beans>
