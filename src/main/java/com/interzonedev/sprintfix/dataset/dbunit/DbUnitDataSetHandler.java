@@ -3,6 +3,7 @@ package com.interzonedev.sprintfix.dataset.dbunit;
 import java.io.File;
 import java.sql.SQLException;
 
+import javax.inject.Named;
 import javax.sql.DataSource;
 
 import org.apache.commons.logging.Log;
@@ -14,6 +15,7 @@ import org.dbunit.operation.DatabaseOperation;
 import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
 import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 
+@Named("sprintfixDbUnitDataSetHandler")
 public class DbUnitDataSetHandler implements DataSetHandler {
 
 	private Log log = LogFactory.getLog(getClass());

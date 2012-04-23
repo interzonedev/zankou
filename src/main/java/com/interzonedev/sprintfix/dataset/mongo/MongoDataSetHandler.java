@@ -3,6 +3,8 @@ package com.interzonedev.sprintfix.dataset.mongo;
 import java.io.File;
 import java.util.Set;
 
+import javax.inject.Named;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -15,6 +17,7 @@ import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
+@Named("sprintfixMongoDataSetHandler")
 public class MongoDataSetHandler implements DataSetHandler {
 
 	private Log log = LogFactory.getLog(getClass());
