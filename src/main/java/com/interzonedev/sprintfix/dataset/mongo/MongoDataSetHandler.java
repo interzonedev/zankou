@@ -17,11 +17,20 @@ import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
+/**
+ * Concrete implementation of {@link DataSetHandler} for MongoDB.
+ * 
+ * @author Mark Markarian - mark@interzonedev.com
+ */
 @Named("sprintfixMongoDataSetHandler")
 public class MongoDataSetHandler implements DataSetHandler {
 
 	private Log log = LogFactory.getLog(getClass());
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.interzonedev.sprintfix.dataset.handler.DataSetHandler#cleanAndInsertData(java.io.File, java.lang.Object, com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer)
+	 */
 	@Override
 	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance, DataSetTransformer dataSetTransformer) {
 		log.debug("cleanAndInsertData: " + dataSetFile.getName());
@@ -37,6 +46,10 @@ public class MongoDataSetHandler implements DataSetHandler {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.interzonedev.sprintfix.dataset.handler.DataSetHandler#cleanData(java.io.File, java.lang.Object)
+	 */
 	@Override
 	public void cleanData(File dataSetFile, Object dataSourceInstance) {
 		log.debug("cleanData: " + dataSetFile.getName());
