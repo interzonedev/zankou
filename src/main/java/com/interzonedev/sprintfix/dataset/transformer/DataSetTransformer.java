@@ -3,8 +3,8 @@ package com.interzonedev.sprintfix.dataset.transformer;
 import com.interzonedev.sprintfix.dataset.DataSet;
 
 /**
- * Interface for transforming individual dataset items. When an implementation is instantiated as a bean the bean name
- * can be set in the {@link DataSet#transformerBeanId()} annotation property.
+ * Interface for transforming individual dataset items. When an implementation is instantiated as a Spring bean the bean
+ * id can be set in the {@link DataSet#transformerBeanId()} annotation property.
  * 
  * @author Mark Markarian - mark@interzonedev.com
  */

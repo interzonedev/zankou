@@ -10,9 +10,22 @@ import java.net.URL;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * Static utility methods for accessing dataset files and contents.
+ * 
+ * @author Mark Markarian - mark@interzonedev.com
+ */
 public class DataSetHelper {
 	private static Log log = LogFactory.getLog(DataSetHelper.class);
 
+	/**
+	 * Gets the {@code File} on the classpath with the specified name.
+	 * 
+	 * @param dataSetFilename
+	 *            The name of the {@code File} to retrieve.
+	 * 
+	 * @return Returns the {@code File} on the classpath with the specified name.
+	 */
 	public static File getDataSetFile(String dataSetFilename) {
 		ClassLoader classloader = null;
 		try {
@@ -36,6 +49,14 @@ public class DataSetHelper {
 		}
 	}
 
+	/**
+	 * Gets the contents of the specifed {@code File}.
+	 * 
+	 * @param file
+	 *            The {@code File} to get the contents of.
+	 * 
+	 * @return Returns the contents of the specifed {@code File}.
+	 */
 	public static String getFileContents(File file) {
 		try {
 			long fileSize = file.length();

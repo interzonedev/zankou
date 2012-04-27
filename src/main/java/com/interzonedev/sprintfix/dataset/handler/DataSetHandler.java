@@ -5,7 +5,8 @@ import java.io.File;
 import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 
 /**
- * Interface for seting up and tearing down the database for each test.
+ * Interface for seting up (clean and insert) and tearing down (clean) the database for each test. An implementation
+ * needs to be provided for each specific datastore being tested.
  * 
  * @author Mark Markarian - mark@interzonedev.com
  */
@@ -13,8 +14,8 @@ public interface DataSetHandler {
 
 	/**
 	 * Cleans and inserts the data represented in the specified dataset file from the database connected to by the
-	 * specified data source. Each record in the dataset file is altered by the specified {@link DataSetTransformer} if
-	 * it is set.
+	 * specified data source. Each record in the dataset file can be altered by the specified {@link DataSetTransformer}
+	 * if it is set.
 	 * 
 	 * @param dataSetFile
 	 *            The file that contains the data with which to set up the database.

@@ -18,6 +18,12 @@ import org.dbunit.dataset.IDataSet;
 
 import com.interzonedev.sprintfix.dataset.DataSetHelper;
 
+/**
+ * Provides methods for comparing datasets with actual database data for JDBC datasources using the DbUnit testing
+ * framework.
+ * 
+ * @author Mark Markarian - mark@interzonedev.com
+ */
 public class DbUnitDataSetTester {
 
 	private Log log = LogFactory.getLog(getClass());

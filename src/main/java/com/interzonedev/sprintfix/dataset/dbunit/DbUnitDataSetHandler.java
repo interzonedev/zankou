@@ -15,11 +15,22 @@ import org.dbunit.operation.DatabaseOperation;
 import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
 import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 
+/**
+ * Concrete implementation of {@link DataSetHandler} for JDBC datasources using the DbUnit testing framework.
+ * 
+ * @author Mark Markarian - mark@interzonedev.com
+ */
 @Named("sprintfixDbUnitDataSetHandler")
 public class DbUnitDataSetHandler implements DataSetHandler {
 
 	private Log log = LogFactory.getLog(getClass());
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.interzonedev.sprintfix.dataset.handler.DataSetHandler#cleanAndInsertData(java.io.File, java.lang.Object,
+	 * com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer)
+	 */
 	@Override
 	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance, DataSetTransformer dataSetTransformer) {
 		try {
@@ -32,6 +43,11 @@ public class DbUnitDataSetHandler implements DataSetHandler {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.interzonedev.sprintfix.dataset.handler.DataSetHandler#cleanData(java.io.File, java.lang.Object)
+	 */
 	@Override
 	public void cleanData(File dataSetFile, Object dataSourceInstance) {
 		try {

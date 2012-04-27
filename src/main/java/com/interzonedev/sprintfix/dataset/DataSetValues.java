@@ -5,6 +5,12 @@ import java.io.File;
 import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
 import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 
+/**
+ * Value object for holding instances represented by the properties in a {@link DataSet} annotation. Specifically holds
+ * the {@link DataSetHandler}, data set {@code File}, data source and {@link DataSetTransformer}.
+ * 
+ * @author Mark Markarian - mark@interzonedev.com
+ */
 public class DataSetValues {
 	private final DataSetHandler dataSetHandler;
 
