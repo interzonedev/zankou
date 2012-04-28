@@ -108,10 +108,17 @@
 		<downloadUrl>http://repo.interzonedev.com/maven</downloadUrl>
 		<repository>
 			<uniqueVersion>true</uniqueVersion>
-			<id>interzonedev-maven-repo</id>
+			<id>interzonedev-maven-repo-releases</id>
 			<name>Interzone Development Maven Repository</name>
-			<url>ftp://repo.interzonedev.com/repo.interzonedev.com/maven</url>
+			<url>ftp://repo.interzonedev.com/repo.interzonedev.com/maven/releases</url>
 			<layout>default</layout>
 		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>interzonedev-maven-repo-snapshots</id>
+			<name>Interzone Development Maven Repository</name>
+			<url>ftp://repo.interzonedev.com/repo.interzonedev.com/maven/snapshots</url>
+			<layout>default</layout>
+		</snapshotRepository>
 	</distributionManagement>
 </project>
