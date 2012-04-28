@@ -19,11 +19,23 @@ import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
 import com.interzonedev.sprintfix.dataset.handler.Handler;
 import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
 
+/**
+ * Context for an individual integration test case. Keeps track of the {@link DataSet}s to be used for the test case.
+ * 
+ * @author Mark Markarian - mark@interzonedev.com
+ */
 public class IntegrationTestContext {
 	private List<DataSetValues> classDataSets = new ArrayList<DataSetValues>();
 
 	private Map<Method, List<DataSetValues>> methodsDataSets = new HashMap<Method, List<DataSetValues>>();
 
+	/**
+	 * Meant to be called before the integration test class is run. Scans for {@link DataSet} and {@link DataSets}
+	 * annotations at the class level of an integration test.
+	 * 
+	 * @param testContext
+	 *            The Spring {@code TestContext} passed in from the {@code TestContextManager}.
+	 */
 	public void setup(TestContext testContext) {
 		Class<?> testClass = testContext.getTestClass();
 
@@ -36,6 +48,17 @@ public class IntegrationTestContext {
 		}
 	}
 
+	/**
+	 * Get the list of {@link DataSetValues} instances for the individual integration test case represented by the
+	 * specified {@code TestContext}. Defaults to the values at the class level if the test method does not specify any
+	 * {@link DataSet}s.
+	 * 
+	 * @param testContext
+	 *            The Spring {@code TestContext} passed in from the {@code TestContextManager}.
+	 * 
+	 * @return Returns the list of {@link DataSetValues} instances for the individual integration test case represented
+	 *         by the specified {@code TestContext}.
+	 */
 	public List<DataSetValues> getTestDataSetValues(TestContext testContext) {
 		Method method = testContext.getTestMethod();
 
