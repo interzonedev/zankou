@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>com.interzonedev</groupId>
 		<artifactId>interzonedev-parent</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>sprintfix</artifactId>
-	<version>0.2.6-SNAPSHOT</version>
+	<version>0.2.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Spring Based Integration Test Fixture</name>
