@@ -1,10 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.interzonedev</groupId>
+	<parent>
+		<groupId>com.interzonedev</groupId>
+		<artifactId>interzonedev-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
 	<artifactId>sprintfix</artifactId>
-	<version>0.2.4</version>
+	<version>0.2.6-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>Spring Based Integration Test Fixture</name>
@@ -14,20 +20,7 @@
 	<url>https://github.com/interzonedev/sprintfix</url>
 	<inceptionYear>2012</inceptionYear>
 
-	<developers>
-		<developer>
-			<name>Mark Markarian</name>
-			<email>mark@interzonedev.com</email>
-			<url>http://interzonedev.com</url>
-			<roles>
-				<role>developer</role>
-			</roles>
-			<timezone>-8</timezone>
-		</developer>
-	</developers>
-
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>3.1.1.RELEASE</spring.version>
 	</properties>
 
@@ -94,31 +87,4 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<extensions>
-			<extension>
-				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-ftp</artifactId>
-				<version>2.2</version>
-			</extension>
-		</extensions>
-	</build>
-
-	<distributionManagement>
-		<downloadUrl>http://repo.interzonedev.com/maven</downloadUrl>
-		<repository>
-			<uniqueVersion>true</uniqueVersion>
-			<id>interzonedev-maven-repo-releases</id>
-			<name>Interzone Development Maven Repository</name>
-			<url>ftp://repo.interzonedev.com/repo.interzonedev.com/maven/releases</url>
-			<layout>default</layout>
-		</repository>
-		<snapshotRepository>
-			<uniqueVersion>true</uniqueVersion>
-			<id>interzonedev-maven-repo-snapshots</id>
-			<name>Interzone Development Maven Repository</name>
-			<url>ftp://repo.interzonedev.com/repo.interzonedev.com/maven/snapshots</url>
-			<layout>default</layout>
-		</snapshotRepository>
-	</distributionManagement>
 </project>
