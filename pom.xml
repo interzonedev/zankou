@@ -9,7 +9,7 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<artifactId>sprintfix</artifactId>
+	<artifactId>zankou</artifactId>
 	<version>0.2.7-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -17,7 +17,7 @@
 	<description>
 		A Spring based framework for setting up, tearing down and testing data in a variety of databases (JDBC, MongoDB).
 	</description>
-	<url>https://github.com/interzonedev/sprintfix</url>
+	<url>https://github.com/interzonedev/zankou</url>
 	<inceptionYear>2012</inceptionYear>
 
 	<properties>
