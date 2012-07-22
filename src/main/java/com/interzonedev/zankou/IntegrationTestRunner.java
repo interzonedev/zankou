@@ -13,12 +13,13 @@ public class IntegrationTestRunner extends SpringJUnit4ClassRunner {
 
 	/**
 	 * Constructs a new {@code IntegrationTestRunner} and initializes a {@link IntegrationTestExecutionListener} to
-	 * provide Sprintfix testing functionality for each integration test.
+	 * provide Zankou testing functionality for each integration test.
 	 * 
 	 * @param testClass
 	 *            The {@code Class} of the integration test case being run.
 	 * 
 	 * @throws InitializationError
+	 *             Thrown if the integration test fails JUnit class level validation.
 	 */
 	public IntegrationTestRunner(Class<?> testClass) throws InitializationError {
 		super(testClass);
