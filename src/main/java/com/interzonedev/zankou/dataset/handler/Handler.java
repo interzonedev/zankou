@@ -1,14 +1,14 @@
-package com.interzonedev.sprintfix.dataset.handler;
+package com.interzonedev.zankou.dataset.handler;
 
 /**
- * Enumeration that defines the databases for which the Sprintfix framework provides pre-defined {@link DataSetHandler}
+ * Enumeration that defines the databases for which the Zankou framework provides pre-defined {@link DataSetHandler}
  * implementations. Each member of the enumeration has the Spring bean id of the {@link DataSetHandler} implementation
  * for the database it represents.
  * 
  * @author Mark Markarian - mark@interzonedev.com
  */
 public enum Handler {
-	DBUNIT("sprintfixDbUnitDataSetHandler"), MONGO("sprintfixMongoDataSetHandler");
+	DBUNIT("zankouDbUnitDataSetHandler"), MONGO("zankouMongoDataSetHandler");
 
 	private final String handlerBeanId;
 

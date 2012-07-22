@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix.dataset;
+package com.interzonedev.zankou.dataset;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
@@ -6,9 +6,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
-import com.interzonedev.sprintfix.dataset.handler.Handler;
-import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
+import com.interzonedev.zankou.dataset.handler.DataSetHandler;
+import com.interzonedev.zankou.dataset.handler.Handler;
+import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
 
 /**
  * Annotates test classes and methods. Specifies the filename of the dataset, the Spring bean id of the

@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix.dataset.mongo;
+package com.interzonedev.zankou.dataset.mongo;
 
 import java.io.File;
 import java.util.Set;
@@ -10,10 +10,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.interzonedev.sprintfix.DataSetOperation;
-import com.interzonedev.sprintfix.dataset.DataSetHelper;
-import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
-import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
+import com.interzonedev.zankou.DataSetOperation;
+import com.interzonedev.zankou.dataset.DataSetHelper;
+import com.interzonedev.zankou.dataset.handler.DataSetHandler;
+import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 
@@ -22,14 +22,16 @@ import com.mongodb.DBObject;
  * 
  * @author Mark Markarian - mark@interzonedev.com
  */
-@Named("sprintfixMongoDataSetHandler")
+@Named("zankouMongoDataSetHandler")
 public class MongoDataSetHandler implements DataSetHandler {
 
 	private Log log = LogFactory.getLog(getClass());
 
 	/*
 	 * (non-Javadoc)
-	 * @see com.interzonedev.sprintfix.dataset.handler.DataSetHandler#cleanAndInsertData(java.io.File, java.lang.Object, com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer)
+	 * 
+	 * @see com.interzonedev.zankou.dataset.handler.DataSetHandler#cleanAndInsertData(java.io.File, java.lang.Object,
+	 * com.interzonedev.zankou.dataset.transformer.DataSetTransformer)
 	 */
 	@Override
 	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance, DataSetTransformer dataSetTransformer) {
@@ -48,7 +50,8 @@ public class MongoDataSetHandler implements DataSetHandler {
 
 	/*
 	 * (non-Javadoc)
-	 * @see com.interzonedev.sprintfix.dataset.handler.DataSetHandler#cleanData(java.io.File, java.lang.Object)
+	 * 
+	 * @see com.interzonedev.zankou.dataset.handler.DataSetHandler#cleanData(java.io.File, java.lang.Object)
 	 */
 	@Override
 	public void cleanData(File dataSetFile, Object dataSourceInstance) {

@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix.dataset.dbunit;
+package com.interzonedev.zankou.dataset.dbunit;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -16,7 +16,7 @@ import org.dbunit.Assertion;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 
-import com.interzonedev.sprintfix.dataset.DataSetHelper;
+import com.interzonedev.zankou.dataset.DataSetHelper;
 
 /**
  * Provides methods for comparing datasets with actual database data for JDBC datasources using the DbUnit testing

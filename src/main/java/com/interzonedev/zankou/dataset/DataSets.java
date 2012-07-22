@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix.dataset;
+package com.interzonedev.zankou.dataset;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;

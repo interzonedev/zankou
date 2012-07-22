@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix.dataset.mongo;
+package com.interzonedev.zankou.dataset.mongo;
 
 import java.io.File;
 import java.util.List;
@@ -6,7 +6,7 @@ import java.util.Set;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import com.interzonedev.sprintfix.dataset.DataSetHelper;
+import com.interzonedev.zankou.dataset.DataSetHelper;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;

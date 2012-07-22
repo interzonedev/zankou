@@ -1,12 +1,11 @@
-package com.interzonedev.sprintfix;
+package com.interzonedev.zankou;
 
 import org.junit.runners.model.InitializationError;
 import org.springframework.test.context.TestContextManager;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
- * The {@code SpringJUnit4ClassRunner} implementation for all integration tests meant to be run by the Sprintfix
- * framework.
+ * The {@code SpringJUnit4ClassRunner} implementation for all integration tests meant to be run by the Zankou framework.
  * 
  * @author Mark Markarian - mark@interzonedev.com
  */

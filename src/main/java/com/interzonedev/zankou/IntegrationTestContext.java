@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix;
+package com.interzonedev.zankou;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -11,13 +11,13 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.TestContext;
 
-import com.interzonedev.sprintfix.dataset.DataSet;
-import com.interzonedev.sprintfix.dataset.DataSetHelper;
-import com.interzonedev.sprintfix.dataset.DataSetValues;
-import com.interzonedev.sprintfix.dataset.DataSets;
-import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
-import com.interzonedev.sprintfix.dataset.handler.Handler;
-import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
+import com.interzonedev.zankou.dataset.DataSet;
+import com.interzonedev.zankou.dataset.DataSetHelper;
+import com.interzonedev.zankou.dataset.DataSetValues;
+import com.interzonedev.zankou.dataset.DataSets;
+import com.interzonedev.zankou.dataset.handler.DataSetHandler;
+import com.interzonedev.zankou.dataset.handler.Handler;
+import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
 
 /**
  * Context for an individual integration test case. Keeps track of the {@link DataSet}s to be used for the test case.

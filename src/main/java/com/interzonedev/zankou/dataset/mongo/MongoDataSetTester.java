@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix.dataset.mongo;
+package com.interzonedev.zankou.dataset.mongo;
 
 import java.util.List;
 

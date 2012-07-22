@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix.dataset.dbunit;
+package com.interzonedev.zankou.dataset.dbunit;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -12,15 +12,15 @@ import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
 
-import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
-import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
+import com.interzonedev.zankou.dataset.handler.DataSetHandler;
+import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
 
 /**
  * Concrete implementation of {@link DataSetHandler} for JDBC datasources using the DbUnit testing framework.
  * 
  * @author Mark Markarian - mark@interzonedev.com
  */
-@Named("sprintfixDbUnitDataSetHandler")
+@Named("zankouDbUnitDataSetHandler")
 public class DbUnitDataSetHandler implements DataSetHandler {
 
 	private Log log = LogFactory.getLog(getClass());
@@ -28,8 +28,8 @@ public class DbUnitDataSetHandler implements DataSetHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.interzonedev.sprintfix.dataset.handler.DataSetHandler#cleanAndInsertData(java.io.File, java.lang.Object,
-	 * com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer)
+	 * @see com.interzonedev.zankou.dataset.handler.DataSetHandler#cleanAndInsertData(java.io.File, java.lang.Object,
+	 * com.interzonedev.zankou.dataset.transformer.DataSetTransformer)
 	 */
 	@Override
 	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance, DataSetTransformer dataSetTransformer) {
@@ -46,7 +46,7 @@ public class DbUnitDataSetHandler implements DataSetHandler {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.interzonedev.sprintfix.dataset.handler.DataSetHandler#cleanData(java.io.File, java.lang.Object)
+	 * @see com.interzonedev.zankou.dataset.handler.DataSetHandler#cleanData(java.io.File, java.lang.Object)
 	 */
 	@Override
 	public void cleanData(File dataSetFile, Object dataSourceInstance) {

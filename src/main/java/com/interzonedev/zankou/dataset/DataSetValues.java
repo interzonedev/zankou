@@ -1,9 +1,9 @@
-package com.interzonedev.sprintfix.dataset;
+package com.interzonedev.zankou.dataset;
 
 import java.io.File;
 
-import com.interzonedev.sprintfix.dataset.handler.DataSetHandler;
-import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
+import com.interzonedev.zankou.dataset.handler.DataSetHandler;
+import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
 
 /**
  * Value object for holding instances represented by the properties in a {@link DataSet} annotation. Specifically holds

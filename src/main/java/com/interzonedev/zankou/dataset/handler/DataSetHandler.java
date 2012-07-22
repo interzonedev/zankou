@@ -1,8 +1,8 @@
-package com.interzonedev.sprintfix.dataset.handler;
+package com.interzonedev.zankou.dataset.handler;
 
 import java.io.File;
 
-import com.interzonedev.sprintfix.dataset.transformer.DataSetTransformer;
+import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
 
 /**
  * Interface for seting up (clean and insert) and tearing down (clean) the database for each test. An implementation

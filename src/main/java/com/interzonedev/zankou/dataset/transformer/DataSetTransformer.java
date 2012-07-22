@@ -1,6 +1,6 @@
-package com.interzonedev.sprintfix.dataset.transformer;
+package com.interzonedev.zankou.dataset.transformer;
 
-import com.interzonedev.sprintfix.dataset.DataSet;
+import com.interzonedev.zankou.dataset.DataSet;
 
 /**
  * Interface for transforming individual dataset items. When an implementation is instantiated as a Spring bean the bean

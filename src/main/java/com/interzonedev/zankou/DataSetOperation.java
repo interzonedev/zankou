@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix;
+package com.interzonedev.zankou;
 
 /**
  * Enumerates operations for setting up and tearing down the database.

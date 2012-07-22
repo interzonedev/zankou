@@ -1,4 +1,4 @@
-package com.interzonedev.sprintfix.dataset.dbunit;
+package com.interzonedev.zankou.dataset.dbunit;
 
 import java.io.File;
 import java.net.MalformedURLException;
