@@ -3,10 +3,11 @@ package com.interzonedev.zankou;
 import java.io.File;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
+
+import ch.qos.logback.classic.Logger;
 
 import com.interzonedev.zankou.dataset.DataSet;
 import com.interzonedev.zankou.dataset.DataSetValues;
@@ -21,7 +22,8 @@ import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
  * @author Mark Markarian - mark@interzonedev.com
  */
 public class IntegrationTestExecutionListener extends AbstractTestExecutionListener {
-	private Log log = LogFactory.getLog(getClass());
+
+	private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 
 	private final ThreadLocal<IntegrationTestContext> integrationTestContext = new ThreadLocal<IntegrationTestContext>();
 

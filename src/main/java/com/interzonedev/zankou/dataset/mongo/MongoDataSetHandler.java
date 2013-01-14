@@ -5,10 +5,11 @@ import java.util.Set;
 
 import javax.inject.Named;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
+
+import ch.qos.logback.classic.Logger;
 
 import com.interzonedev.zankou.DataSetOperation;
 import com.interzonedev.zankou.dataset.DataSetHelper;
@@ -25,7 +26,7 @@ import com.mongodb.DBObject;
 @Named("zankouMongoDataSetHandler")
 public class MongoDataSetHandler implements DataSetHandler {
 
-	private Log log = LogFactory.getLog(getClass());
+	private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 
 	/*
 	 * (non-Javadoc)

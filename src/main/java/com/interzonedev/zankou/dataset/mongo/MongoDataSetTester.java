@@ -2,10 +2,11 @@ package com.interzonedev.zankou.dataset.mongo;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.junit.Assert;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
+
+import ch.qos.logback.classic.Logger;
 
 import com.mongodb.DBObject;
 
@@ -16,7 +17,7 @@ import com.mongodb.DBObject;
  */
 public class MongoDataSetTester {
 
-	private Log log = LogFactory.getLog(getClass());
+	private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 
 	/**
 	 * Compares the expected values in the specified dataset file in the specified collection against the MongoDB

@@ -10,11 +10,12 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dbunit.Assertion;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
 
 import com.interzonedev.zankou.dataset.DataSetHelper;
 
@@ -26,7 +27,7 @@ import com.interzonedev.zankou.dataset.DataSetHelper;
  */
 public class DbUnitDataSetTester {
 
-	private Log log = LogFactory.getLog(getClass());
+	private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 
 	/**
 	 * Compares the specified expected data set with the actual data in the database. Ignores the specified columns.

@@ -8,8 +8,6 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
@@ -27,6 +25,9 @@ import org.dbunit.ext.mssql.MsSqlDataTypeFactory;
 import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.ext.oracle.OracleDataTypeFactory;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
 
 /**
  * Static utilities helper class for getting database connection and data sets for DbUnit based tests.
@@ -34,7 +35,7 @@ import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
  * @author mark@interzonedev.com
  */
 public class DbUnitUtils {
-	private static Log log = LogFactory.getLog(DbUnitUtils.class);
+	private static final Logger log = (Logger) LoggerFactory.getLogger(DbUnitUtils.class);
 
 	/**
 	 * Gets an {@code IDatabaseConnection} wrapped connection to the database represented by the specified

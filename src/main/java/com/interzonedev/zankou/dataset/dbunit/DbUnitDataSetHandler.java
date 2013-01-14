@@ -6,11 +6,12 @@ import java.sql.SQLException;
 import javax.inject.Named;
 import javax.sql.DataSource;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.slf4j.LoggerFactory;
+
+import ch.qos.logback.classic.Logger;
 
 import com.interzonedev.zankou.dataset.handler.DataSetHandler;
 import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
@@ -23,7 +24,7 @@ import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
 @Named("zankouDbUnitDataSetHandler")
 public class DbUnitDataSetHandler implements DataSetHandler {
 
-	private Log log = LogFactory.getLog(getClass());
+	private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 
 	/*
 	 * (non-Javadoc)
