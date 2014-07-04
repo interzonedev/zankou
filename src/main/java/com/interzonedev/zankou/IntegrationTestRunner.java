@@ -11,21 +11,19 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 public class IntegrationTestRunner extends SpringJUnit4ClassRunner {
 
-	/**
-	 * Constructs a new {@code IntegrationTestRunner} and initializes a {@link IntegrationTestExecutionListener} to
-	 * provide Zankou testing functionality for each integration test.
-	 * 
-	 * @param testClass
-	 *            The {@code Class} of the integration test case being run.
-	 * 
-	 * @throws InitializationError
-	 *             Thrown if the integration test fails JUnit class level validation.
-	 */
-	public IntegrationTestRunner(Class<?> testClass) throws InitializationError {
-		super(testClass);
+    /**
+     * Constructs a new {@code IntegrationTestRunner} and initializes a {@link IntegrationTestExecutionListener} to
+     * provide Zankou testing functionality for each integration test.
+     * 
+     * @param testClass The {@code Class} of the integration test case being run.
+     * 
+     * @throws InitializationError Thrown if the integration test fails JUnit class level validation.
+     */
+    public IntegrationTestRunner(Class<?> testClass) throws InitializationError {
+        super(testClass);
 
-		TestContextManager testContextManager = getTestContextManager();
-		testContextManager.registerTestExecutionListeners(new IntegrationTestExecutionListener());
-	}
+        TestContextManager testContextManager = getTestContextManager();
+        testContextManager.registerTestExecutionListeners(new IntegrationTestExecutionListener());
+    }
 
 }

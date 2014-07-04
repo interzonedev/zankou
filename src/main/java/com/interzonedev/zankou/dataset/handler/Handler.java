@@ -8,22 +8,22 @@ package com.interzonedev.zankou.dataset.handler;
  * @author Mark Markarian - mark@interzonedev.com
  */
 public enum Handler {
-	DBUNIT("zankouDbUnitDataSetHandler"), MONGO("zankouMongoDataSetHandler");
+    DBUNIT("zankouDbUnitDataSetHandler"), MONGO("zankouMongoDataSetHandler");
 
-	private final String handlerBeanId;
+    private final String handlerBeanId;
 
-	private Handler(String handlerBeanId) {
-		this.handlerBeanId = handlerBeanId;
-	}
+    private Handler(String handlerBeanId) {
+        this.handlerBeanId = handlerBeanId;
+    }
 
-	/**
-	 * Get the Spring bean id of the {@link DataSetHandler} implementation for the database represented by this
-	 * {@link Handler}.
-	 * 
-	 * @return Returns the Spring bean id of the {@link DataSetHandler} implementation for the database represented by
-	 *         this {@link Handler}.
-	 */
-	public String handlerBeanId() {
-		return handlerBeanId;
-	}
+    /**
+     * Get the Spring bean id of the {@link DataSetHandler} implementation for the database represented by this
+     * {@link Handler}.
+     * 
+     * @return Returns the Spring bean id of the {@link DataSetHandler} implementation for the database represented by
+     *         this {@link Handler}.
+     */
+    public String handlerBeanId() {
+        return handlerBeanId;
+    }
 }

@@ -26,75 +26,75 @@ import com.mongodb.DBObject;
 @Named("zankouMongoDataSetHandler")
 public class MongoDataSetHandler implements DataSetHandler {
 
-	private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
+    private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.interzonedev.zankou.dataset.handler.DataSetHandler#cleanAndInsertData(java.io.File, java.lang.Object,
-	 * com.interzonedev.zankou.dataset.transformer.DataSetTransformer)
-	 */
-	@Override
-	public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance, DataSetTransformer dataSetTransformer) {
-		log.debug("cleanAndInsertData: " + dataSetFile.getName());
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.interzonedev.zankou.dataset.handler.DataSetHandler#cleanAndInsertData(java.io.File, java.lang.Object,
+     * com.interzonedev.zankou.dataset.transformer.DataSetTransformer)
+     */
+    @Override
+    public void cleanAndInsertData(File dataSetFile, Object dataSourceInstance, DataSetTransformer dataSetTransformer) {
+        log.debug("cleanAndInsertData: " + dataSetFile.getName());
 
-		try {
-			MongoTemplate mongoTemplate = (MongoTemplate) dataSourceInstance;
-			doDatabaseOperation(DataSetOperation.SETUP, mongoTemplate, dataSetFile, dataSetTransformer);
-			log.debug("cleanAndInsertData: Inserted collections");
-		} catch (Throwable t) {
-			String errorMessage = "cleanAndInsertData: Error setting up database";
-			log.error(errorMessage, t);
-			throw new RuntimeException(errorMessage, t);
-		}
-	}
+        try {
+            MongoTemplate mongoTemplate = (MongoTemplate) dataSourceInstance;
+            doDatabaseOperation(DataSetOperation.SETUP, mongoTemplate, dataSetFile, dataSetTransformer);
+            log.debug("cleanAndInsertData: Inserted collections");
+        } catch (Throwable t) {
+            String errorMessage = "cleanAndInsertData: Error setting up database";
+            log.error(errorMessage, t);
+            throw new RuntimeException(errorMessage, t);
+        }
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.interzonedev.zankou.dataset.handler.DataSetHandler#cleanData(java.io.File, java.lang.Object)
-	 */
-	@Override
-	public void cleanData(File dataSetFile, Object dataSourceInstance) {
-		log.debug("cleanData: " + dataSetFile.getName());
+    /*
+     * (non-Javadoc)
+     * 
+     * @see com.interzonedev.zankou.dataset.handler.DataSetHandler#cleanData(java.io.File, java.lang.Object)
+     */
+    @Override
+    public void cleanData(File dataSetFile, Object dataSourceInstance) {
+        log.debug("cleanData: " + dataSetFile.getName());
 
-		try {
-			MongoTemplate mongoTemplate = (MongoTemplate) dataSourceInstance;
-			doDatabaseOperation(DataSetOperation.TEARDOWN, mongoTemplate, dataSetFile, null);
-			log.debug("cleanData: Emptied collections");
-		} catch (Throwable t) {
-			String errorMessage = "cleanAndInsertData: Error tearing down database";
-			log.error(errorMessage, t);
-			throw new RuntimeException(errorMessage, t);
-		}
-	}
+        try {
+            MongoTemplate mongoTemplate = (MongoTemplate) dataSourceInstance;
+            doDatabaseOperation(DataSetOperation.TEARDOWN, mongoTemplate, dataSetFile, null);
+            log.debug("cleanData: Emptied collections");
+        } catch (Throwable t) {
+            String errorMessage = "cleanAndInsertData: Error tearing down database";
+            log.error(errorMessage, t);
+            throw new RuntimeException(errorMessage, t);
+        }
+    }
 
-	private void doDatabaseOperation(DataSetOperation operation, MongoTemplate mongoTemplate, File dataSetFile,
-			DataSetTransformer dataSetTransformer) {
-		String dataSetFileContents = DataSetHelper.getFileContents(dataSetFile);
+    private void doDatabaseOperation(DataSetOperation operation, MongoTemplate mongoTemplate, File dataSetFile,
+            DataSetTransformer dataSetTransformer) {
+        String dataSetFileContents = DataSetHelper.getFileContents(dataSetFile);
 
-		DBObject dataSetDBObject = MongoUtils.getDBObjectFromFileContents(dataSetFileContents);
+        DBObject dataSetDBObject = MongoUtils.getDBObjectFromFileContents(dataSetFileContents);
 
-		Set<String> collectionNames = MongoUtils.getCollectionNamesFromFileContents(dataSetFileContents);
+        Set<String> collectionNames = MongoUtils.getCollectionNamesFromFileContents(dataSetFileContents);
 
-		for (String collectionName : collectionNames) {
-			mongoTemplate.remove(new Query(), collectionName);
-		}
+        for (String collectionName : collectionNames) {
+            mongoTemplate.remove(new Query(), collectionName);
+        }
 
-		if (DataSetOperation.SETUP.equals(operation)) {
+        if (DataSetOperation.SETUP.equals(operation)) {
 
-			for (String collectionName : collectionNames) {
-				DBCollection collection = mongoTemplate.getCollection(collectionName);
+            for (String collectionName : collectionNames) {
+                DBCollection collection = mongoTemplate.getCollection(collectionName);
 
-				DBObject collectionData = (DBObject) dataSetDBObject.get(collectionName);
-				for (String key : collectionData.keySet()) {
-					DBObject collectionItem = (DBObject) collectionData.get(key);
-					if (null != dataSetTransformer) {
-						collectionItem = (DBObject) dataSetTransformer.transformDataSetItem(collectionItem);
-					}
-					collection.insert(collectionItem);
-				}
-			}
-		}
-	}
+                DBObject collectionData = (DBObject) dataSetDBObject.get(collectionName);
+                for (String key : collectionData.keySet()) {
+                    DBObject collectionItem = (DBObject) collectionData.get(key);
+                    if (null != dataSetTransformer) {
+                        collectionItem = (DBObject) dataSetTransformer.transformDataSetItem(collectionItem);
+                    }
+                    collection.insert(collectionItem);
+                }
+            }
+        }
+    }
 }

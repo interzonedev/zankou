@@ -6,5 +6,5 @@ package com.interzonedev.zankou;
  * @author Mark Markarian - mark@interzonedev.com
  */
 public enum DataSetOperation {
-	SETUP, TEARDOWN;
+    SETUP, TEARDOWN;
 }
