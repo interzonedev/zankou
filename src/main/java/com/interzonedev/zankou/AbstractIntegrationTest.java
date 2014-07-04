@@ -11,7 +11,7 @@ import com.interzonedev.zankou.dataset.DataSets;
  * integration tests that use the {@link DataSets} or {@link DataSet} annotations on test classes and methods. Running
  * this will create the Zankou Spring application context.
  * 
- * @author "Mark Markarian" <mark@interzonedev.com>
+ * @author "Mark Markarian" &lt;mark@interzonedev.com&gt;
  */
 @RunWith(IntegrationTestRunner.class)
 @ContextConfiguration(locations = { "classpath:spring/com/interzonedev/zankou/applicationContext-zankou.xml" })
