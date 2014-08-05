@@ -79,6 +79,7 @@ public class DbUnitUtils {
      */
     protected static IDataSet getDataSet(File dataSetFile) throws MalformedURLException, DataSetException {
         FlatXmlDataSetBuilder builder = new FlatXmlDataSetBuilder();
+        builder.setColumnSensing(true);
         FlatXmlDataSet flatXmlDataSet = builder.build(dataSetFile);
         return flatXmlDataSet;
     }

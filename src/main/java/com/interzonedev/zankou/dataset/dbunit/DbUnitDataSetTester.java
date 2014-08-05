@@ -27,84 +27,79 @@ import com.interzonedev.zankou.dataset.DataSetHelper;
  */
 public class DbUnitDataSetTester {
 
-	private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
+    private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
 
-	/**
-	 * Compares the specified expected data set with the actual data in the database. Ignores the specified columns.
-	 * 
-	 * @param dataSource
-	 *            - The JDBC {@code DataSource} that represents the database to from which to get the actual data.
-	 * @param expectedDataSetFilename
-	 *            - The file name of the DbUnit XML data set to compare against the actual data.
-	 * @param tableName
-	 *            - The name of the table in the database and data set to compare.
-	 * @param ignoreColumnNames
-	 *            - A {@code List} of column names to be ignored in the comparison.
-	 */
-	public void compareDataSetsIgnoreColumns(DataSource dataSource, String expectedDataSetFilename, String tableName,
-			List<String> ignoreColumnNames) {
-		IDatabaseConnection databaseConnection = null;
+    /**
+     * Compares the specified expected data set with the actual data in the database. Ignores the specified columns.
+     * 
+     * @param dataSource - The JDBC {@code DataSource} that represents the database to from which to get the actual
+     *            data.
+     * @param expectedDataSetFilename - The file name of the DbUnit XML data set to compare against the actual data.
+     * @param tableName - The name of the table in the database and data set to compare.
+     * @param ignoreColumnNames - A {@code List} of column names to be ignored in the comparison.
+     */
+    public void compareDataSetsIgnoreColumns(DataSource dataSource, String expectedDataSetFilename, String tableName,
+            List<String> ignoreColumnNames) {
+        IDatabaseConnection databaseConnection = null;
 
-		try {
-			if (null == ignoreColumnNames) {
-				ignoreColumnNames = Collections.emptyList();
-			}
+        try {
+            if (null == ignoreColumnNames) {
+                ignoreColumnNames = Collections.emptyList();
+            }
 
-			databaseConnection = DbUnitUtils.getDatabaseConnection(dataSource);
+            databaseConnection = DbUnitUtils.getDatabaseConnection(dataSource);
 
-			IDataSet actualDataSet = databaseConnection.createDataSet();
+            IDataSet actualDataSet = databaseConnection.createDataSet();
 
-			File expectedDataSetFile = DataSetHelper.getDataSetFile(expectedDataSetFilename);
+            File expectedDataSetFile = DataSetHelper.getDataSetFile(expectedDataSetFilename);
 
-			IDataSet expectedDataSet = DbUnitUtils.getDataSet(expectedDataSetFile);
+            IDataSet expectedDataSet = DbUnitUtils.getDataSet(expectedDataSetFile);
 
-			Assertion.assertEqualsIgnoreCols(expectedDataSet, actualDataSet, tableName,
-					ignoreColumnNames.toArray(new String[] {}));
-		} catch (Throwable t) {
-			String errorMessage = "compareDataSetsIgnoreColumns: Error comparing datasets";
-			log.error(errorMessage, t);
-			throw new RuntimeException(errorMessage, t);
-		} finally {
-			if (null != databaseConnection) {
-				try {
-					databaseConnection.close();
-					log.debug("compareDataSetsIgnoreColumns: Closed connection " + databaseConnection + " from "
-							+ dataSource);
-				} catch (SQLException e) {
-					String errorMessage = "compareDataSetsIgnoreColumns: Error closing database connection";
-					log.error(errorMessage, e);
-					throw new RuntimeException(errorMessage, e);
-				}
-			}
-		}
-	}
+            Assertion.assertEqualsIgnoreCols(expectedDataSet, actualDataSet, tableName,
+                    ignoreColumnNames.toArray(new String[] {}));
+        } catch (Throwable t) {
+            String errorMessage = "compareDataSetsIgnoreColumns: Error comparing datasets";
+            log.error(errorMessage, t);
+            throw new RuntimeException(errorMessage, t);
+        } finally {
+            if (null != databaseConnection) {
+                try {
+                    databaseConnection.close();
+                    log.debug("compareDataSetsIgnoreColumns: Closed connection " + databaseConnection + " from "
+                            + dataSource);
+                } catch (SQLException e) {
+                    String errorMessage = "compareDataSetsIgnoreColumns: Error closing database connection";
+                    log.error(errorMessage, e);
+                    throw new RuntimeException(errorMessage, e);
+                }
+            }
+        }
+    }
 
-	/**
-	 * Uses the {@code java.util.Date#compareTo(java.util.Date)} method to compare the specified dates after setting the
-	 * milliseconds to zero on both.
-	 * 
-	 * @param first
-	 *            - The first {@code java.util.Date} to compare.
-	 * @param second
-	 *            - The first {@code java.util.Date} to compare.
-	 * 
-	 * @return Returns 0 if the first and seconds dates are equal down to the second. Returns less than 0 if the first
-	 *         date is before the seconds date down to the second. Returns greater than 0 if the first date is after the
-	 *         second date down to the second.
-	 */
-	public int compareDatesToTheSecond(Date first, Date second) {
-		Calendar firstCalendar = new GregorianCalendar();
-		firstCalendar.setTime(first);
-		firstCalendar.set(Calendar.MILLISECOND, 0);
-		Date firstNoMillis = firstCalendar.getTime();
+    /**
+     * Uses the {@code java.util.Date#compareTo(java.util.Date)} method to compare the specified dates after setting the
+     * milliseconds to zero on both.
+     * 
+     * @param first - The first {@code java.util.Date} to compare.
+     * @param second - The first {@code java.util.Date} to compare.
+     * 
+     * @return Returns 0 if the first and seconds dates are equal down to the second. Returns less than 0 if the first
+     *         date is before the seconds date down to the second. Returns greater than 0 if the first date is after the
+     *         second date down to the second.
+     */
+    public int compareDatesToTheSecond(Date first, Date second) {
+        Calendar firstCalendar = new GregorianCalendar();
+        firstCalendar.setTime(first);
+        firstCalendar.set(Calendar.MILLISECOND, 0);
+        Date firstNoMillis = firstCalendar.getTime();
 
-		Calendar secondCalendar = new GregorianCalendar();
-		secondCalendar.setTime(second);
-		secondCalendar.set(Calendar.MILLISECOND, 0);
-		Date secondNoMillis = secondCalendar.getTime();
+        Calendar secondCalendar = new GregorianCalendar();
+        secondCalendar.setTime(second);
+        secondCalendar.set(Calendar.MILLISECOND, 0);
+        Date secondNoMillis = secondCalendar.getTime();
 
-		int compare = firstNoMillis.compareTo(secondNoMillis);
+        int compare = firstNoMillis.compareTo(secondNoMillis);
 
-		return compare;
-	}
+        return compare;
+    }
 }
