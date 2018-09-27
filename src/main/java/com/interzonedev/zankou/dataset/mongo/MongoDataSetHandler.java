@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.inject.Named;
 
+import com.mongodb.client.MongoCollection;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Query;
@@ -82,9 +83,8 @@ public class MongoDataSetHandler implements DataSetHandler {
         }
 
         if (DataSetOperation.SETUP.equals(operation)) {
-
             for (String collectionName : collectionNames) {
-                DBCollection collection = mongoTemplate.getCollection(collectionName);
+                MongoCollection collection = mongoTemplate.getCollection(collectionName);
 
                 DBObject collectionData = (DBObject) dataSetDBObject.get(collectionName);
                 for (String key : collectionData.keySet()) {
@@ -92,7 +92,7 @@ public class MongoDataSetHandler implements DataSetHandler {
                     if (null != dataSetTransformer) {
                         collectionItem = (DBObject) dataSetTransformer.transformDataSetItem(collectionItem);
                     }
-                    collection.insert(collectionItem);
+                    collection.insertOne(collectionItem);
                 }
             }
         }

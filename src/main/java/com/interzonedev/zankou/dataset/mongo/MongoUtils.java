@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.List;
 import java.util.Set;
 
+import com.mongodb.Block;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.interzonedev.zankou.dataset.DataSetHelper;
@@ -86,11 +89,9 @@ public class MongoUtils {
             List<String> ignorePropertyNames) {
         BasicDBList collectionMembers = new BasicDBList();
 
-        DBCollection collection = mongoTemplate.getCollection(collectionName);
-        DBCursor collectionCursor = collection.find();
-        for (DBObject obj : collectionCursor) {
-            collectionMembers.add(obj);
-        }
+        MongoCollection collection = mongoTemplate.getCollection(collectionName);
+        FindIterable findIterable = collection.find();
+        findIterable.forEach((Block) o -> collectionMembers.add(o));
 
         removeIgnorePropertyNames(collectionMembers, ignorePropertyNames);
 
