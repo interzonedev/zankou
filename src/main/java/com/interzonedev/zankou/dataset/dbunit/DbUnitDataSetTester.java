@@ -1,5 +1,13 @@
 package com.interzonedev.zankou.dataset.dbunit;
 
+import com.interzonedev.zankou.dataset.DataSetHelper;
+import org.dbunit.Assertion;
+import org.dbunit.database.IDatabaseConnection;
+import org.dbunit.dataset.IDataSet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.sql.DataSource;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -7,17 +15,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-
-import javax.sql.DataSource;
-
-import org.dbunit.Assertion;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.IDataSet;
-import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Logger;
-
-import com.interzonedev.zankou.dataset.DataSetHelper;
 
 /**
  * Provides methods for comparing datasets with actual database data for JDBC datasources using the DbUnit testing
@@ -27,7 +24,7 @@ import com.interzonedev.zankou.dataset.DataSetHelper;
  */
 public class DbUnitDataSetTester {
 
-    private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
+    private static final Logger log = LoggerFactory.getLogger(DbUnitDataSetTester.class);
 
     /**
      * Compares the specified expected data set with the actual data in the database. Ignores the specified columns.

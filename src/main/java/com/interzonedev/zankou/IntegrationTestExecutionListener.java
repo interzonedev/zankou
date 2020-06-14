@@ -1,18 +1,16 @@
 package com.interzonedev.zankou;
 
-import java.io.File;
-import java.util.List;
-
-import org.slf4j.LoggerFactory;
-import org.springframework.test.context.TestContext;
-import org.springframework.test.context.support.AbstractTestExecutionListener;
-
-import ch.qos.logback.classic.Logger;
-
 import com.interzonedev.zankou.dataset.DataSet;
 import com.interzonedev.zankou.dataset.DataSetValues;
 import com.interzonedev.zankou.dataset.handler.DataSetHandler;
 import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.test.context.TestContext;
+import org.springframework.test.context.support.AbstractTestExecutionListener;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * {@code TestExecutionListener} implementation that handles scanning for {@link DataSet} annotations and performing
@@ -23,7 +21,7 @@ import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
  */
 public class IntegrationTestExecutionListener extends AbstractTestExecutionListener {
 
-    private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
+    private static final Logger log = LoggerFactory.getLogger(IntegrationTestExecutionListener.class);
 
     private final ThreadLocal<IntegrationTestContext> integrationTestContext = new ThreadLocal<IntegrationTestContext>();
 

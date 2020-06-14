@@ -1,15 +1,14 @@
 package com.interzonedev.zankou.dataset;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
-
-import org.slf4j.LoggerFactory;
-
-import ch.qos.logback.classic.Logger;
 
 /**
  * Static utility methods for accessing dataset files and contents.
@@ -18,7 +17,7 @@ import ch.qos.logback.classic.Logger;
  */
 public class DataSetHelper {
 
-    private static final Logger log = (Logger) LoggerFactory.getLogger(DataSetHelper.class);
+    private static final Logger log = LoggerFactory.getLogger(DataSetHelper.class);
 
     /**
      * Gets the {@code File} on the classpath with the specified name.

@@ -1,14 +1,12 @@
 package com.interzonedev.zankou.dataset.mongo;
 
-import java.util.List;
-
+import com.mongodb.DBObject;
 import org.junit.Assert;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import ch.qos.logback.classic.Logger;
-
-import com.mongodb.DBObject;
+import java.util.List;
 
 /**
  * Provides the ability to compare expected values against a real MongoDB database.
@@ -17,7 +15,7 @@ import com.mongodb.DBObject;
  */
 public class MongoDataSetTester {
 
-    private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
+    private static final Logger log = LoggerFactory.getLogger(MongoDataSetTester.class);
 
     /**
      * Compares the expected values in the specified dataset file in the specified collection against the MongoDB

@@ -1,20 +1,17 @@
 package com.interzonedev.zankou.dataset.dbunit;
 
-import java.io.File;
-import java.sql.SQLException;
-
-import javax.inject.Named;
-import javax.sql.DataSource;
-
+import com.interzonedev.zankou.dataset.handler.DataSetHandler;
+import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.classic.Logger;
-
-import com.interzonedev.zankou.dataset.handler.DataSetHandler;
-import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
+import javax.inject.Named;
+import javax.sql.DataSource;
+import java.io.File;
+import java.sql.SQLException;
 
 /**
  * Concrete implementation of {@link DataSetHandler} for JDBC datasources using the DbUnit testing framework.
@@ -24,7 +21,7 @@ import com.interzonedev.zankou.dataset.transformer.DataSetTransformer;
 @Named("zankouDbUnitDataSetHandler")
 public class DbUnitDataSetHandler implements DataSetHandler {
 
-    private final Logger log = (Logger) LoggerFactory.getLogger(getClass());
+    private static final Logger log = LoggerFactory.getLogger(DbUnitDataSetHandler.class);
 
     /*
      * (non-Javadoc)

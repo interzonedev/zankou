@@ -1,13 +1,5 @@
 package com.interzonedev.zankou.dataset.dbunit;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConfig;
 import org.dbunit.database.DatabaseConnection;
@@ -25,9 +17,15 @@ import org.dbunit.ext.mssql.MsSqlDataTypeFactory;
 import org.dbunit.ext.mysql.MySqlDataTypeFactory;
 import org.dbunit.ext.oracle.OracleDataTypeFactory;
 import org.dbunit.ext.postgresql.PostgresqlDataTypeFactory;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.qos.logback.classic.Logger;
+import javax.sql.DataSource;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.SQLException;
 
 /**
  * Static utilities helper class for getting database connection and data sets for DbUnit based tests.
@@ -35,7 +33,7 @@ import ch.qos.logback.classic.Logger;
  * @author mark@interzonedev.com
  */
 public class DbUnitUtils {
-    private static final Logger log = (Logger) LoggerFactory.getLogger(DbUnitUtils.class);
+    private static final Logger log = LoggerFactory.getLogger(DbUnitUtils.class);
 
     /**
      * Gets an {@code IDatabaseConnection} wrapped connection to the database represented by the specified
