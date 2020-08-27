@@ -8,7 +8,7 @@ package com.interzonedev.zankou.dataset.handler;
  * @author Mark Markarian - mark@interzonedev.com
  */
 public enum Handler {
-    DBUNIT("zankouDbUnitDataSetHandler"), MONGO("zankouMongoDataSetHandler");
+    DBUNIT("zankouDbUnitDataSetHandler");
 
     private final String handlerBeanId;
 
